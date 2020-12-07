@@ -21,30 +21,35 @@ export class CustomInputComponent implements ControlValueAccessor {
   constructor() { }
 
   /**
-  * Write a new value to the element.
-  */
+    * Writes a new value to the element.
+    *
+    * This method is called by the forms API to write to the view when programmatic changes from model to view are requested.
+    */
   writeValue(value: string): void {
     this.value = value;
   }
 
   /**
-  * Set the function to be called when the control receives a change event.
+  * Registers a callback function that is called when the control's value changes in the UI.
+  *
+  * This method is called by the forms API on initialization to update the form model when values propagate from the view to the model.
+  * When implementing the `registerOnChange` method in your own value accessor, save the given function so your class calls it at the appropriate time.
   */
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
   /**
-  * Set the function to be called when the control receives a touch event.
-  */
+    * Registers a callback function is called by the forms API on initialization to update the form model on blur.
+    *
+    * When implementing `registerOnTouched` in your own value accessor, save the given function so your class calls it when the control should be considered blurred or "touched".
+    */
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
   /**
-  * This function is called when the control status changes to or from "DISABLED".
-  * Depending on the value, it will enable or disable the appropriate DOM element.
-  * @param isDisabled
+  * Function that is called by the forms API when the control status changes to or from 'DISABLED'. Depending on the status, it enables or disables the appropriate DOM element.
   */
   setDisabledState?(isDisabled: boolean) {
     this.disabled = isDisabled;
