@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "control-value-accessor"
+  "defaultProject": "control-value-accessor",
+  "cli": {
+    "analytics": false
+  }
 }
