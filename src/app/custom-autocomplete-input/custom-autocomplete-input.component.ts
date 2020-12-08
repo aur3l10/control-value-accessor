@@ -6,6 +6,7 @@ import { map, startWith, switchMap, tap } from 'rxjs/operators';
 
 export interface User {
   name: string;
+  id: number
 }
 
 @Component({
@@ -21,13 +22,22 @@ export interface User {
 export class CustomAutocompleteInputComponent implements OnInit, ControlValueAccessor {
 
   onTouched!: () => void;
-  onChange!: (value: string) => void;
+  onChange!: (value: number) => void;
 
   myControl = new FormControl();
   options: Observable<User[]> = of([
-    { name: 'Mary' },
-    { name: 'Shelley' },
-    { name: 'Igor' }
+    {
+      name: 'Mary',
+      id: 1
+    },
+    {
+      name: 'Shelley',
+      id: 2
+    },
+    {
+      name: 'Igor',
+      id: 3
+    }
   ]);
   filteredOptions!: Observable<User[]>;
 
@@ -45,7 +55,7 @@ export class CustomAutocompleteInputComponent implements OnInit, ControlValueAcc
    * @param event
    */
   onSelect(event: MatAutocompleteSelectedEvent) {
-    this.onChange((event.option.value as User).name);
+    this.onChange((event.option.value as User).id);
   }
 
   displayFn(user: User): string {
@@ -57,15 +67,12 @@ export class CustomAutocompleteInputComponent implements OnInit, ControlValueAcc
   * @param value
   */
   writeValue(value: string): void {
-    // const [option] = this._filter(value)
     this._filter(value).subscribe(
       option => {
         const [o] = option
         this.myControl.setValue(o);
-        this.myControl.updateValueAndValidity();
       }
     )
-
   }
 
   registerOnChange(fn: any): void {
@@ -76,12 +83,21 @@ export class CustomAutocompleteInputComponent implements OnInit, ControlValueAcc
     this.onTouched = fn;
   }
 
-  private _filter(name: string): Observable<User[]> {
-    const filterValue = name.toLowerCase();
+  private _filter(value: string | number): Observable<User[]> {
 
-    return this.options.pipe(
-      map(options => options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0))
-    )
+    switch (typeof value) {
+      case 'string':
+        const filterValue = (value as string).toLowerCase();
+
+        return this.options.pipe(
+          map(options => options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0))
+        );
+
+      case 'number':
+        return this.options.pipe(
+          map(options => options.filter(option => option.id === value))
+        );
+    }
 
   }
 

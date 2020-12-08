@@ -11,6 +11,6 @@ export class AppComponent {
 
   inputTest: FormControl = new FormControl(undefined);
   inputTest2: FormControl = new FormControl(undefined);
-  customAutocomplete: FormControl = new FormControl('Shelley');
+  customAutocomplete: FormControl = new FormControl(3);
 
 }
