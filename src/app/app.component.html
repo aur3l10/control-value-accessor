@@ -13,4 +13,11 @@
     <div>Touched: {{ inputTest2.touched }}</div>
     <div>Dirty: {{ inputTest2.dirty}}</div>
   </section>
+  <section class="section">
+    <h2>Input length</h2>
+    <app-custom-autocomplete-input [formControl]="customAutocomplete"></app-custom-autocomplete-input>
+    <div>Value: {{ customAutocomplete.value | json }}</div>
+    <div>Touched: {{ customAutocomplete.touched }}</div>
+    <div>Dirty: {{ customAutocomplete.dirty}}</div>
+  </section>
 </div>
