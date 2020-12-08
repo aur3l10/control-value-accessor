@@ -9,6 +9,6 @@ import { FormControl } from '@angular/forms';
 export class AppComponent {
   title = 'control-value-accessor';
 
-  inputTest: FormControl = new FormControl('prova');
+  inputTest: FormControl = new FormControl(undefined);
 
 }

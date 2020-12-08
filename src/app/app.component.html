@@ -1,5 +1,12 @@
-<h1>Custom input</h1>
-<app-custom-input [formControl]="inputTest"></app-custom-input>
-<div>Value: {{ inputTest.value }}</div>
-<div>Touched: {{ inputTest.touched }}</div>
-<div>Dirty: {{ inputTest.dirty}}</div>
+<div class="container">
+  <div>
+    <h1>Custom input</h1>
+    <app-custom-input [formControl]="inputTest"></app-custom-input>
+    <div>Value: {{ inputTest.value }}</div>
+    <div>Touched: {{ inputTest.touched }}</div>
+    <div>Dirty: {{ inputTest.dirty}}</div>
+  </div>
+  <div>
+    <app-custom-autocomplete-input></app-custom-autocomplete-input>
+  </div>
+</div>

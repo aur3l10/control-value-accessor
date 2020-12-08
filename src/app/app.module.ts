@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CustomInputComponent } from './custom-input/custom-input.component';
+import { SimpleCustomInputComponent } from './simple-custom-input/simple-custom-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CustomInputComponent
+    SimpleCustomInputComponent,
   ],
   imports: [
     BrowserModule,
