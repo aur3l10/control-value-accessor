@@ -2,22 +2,22 @@ import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-simple-custom-input',
+  selector: 'app-input-length',
   template: `
     <input
       type="text"
       (blur)="onTouched()"
-      (input)="onChange($event.target.value)"
+      (input)="appendStringLength($event.target.value)"
       [disabled]="disabled"
       [value]="value" />
   `,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: SimpleCustomInputComponent,
+    useExisting: InputLengthComponent,
     multi: true
   }]
 })
-export class SimpleCustomInputComponent implements ControlValueAccessor {
+export class InputLengthComponent implements ControlValueAccessor {
 
   value!: string;
   onChange!: (value: string) => void;
@@ -63,6 +63,12 @@ export class SimpleCustomInputComponent implements ControlValueAccessor {
   */
   setDisabledState?(isDisabled: boolean) {
     this.disabled = isDisabled;
+  }
+
+  appendStringLength(value: string) {
+    const valueLength = value.length.toString();
+    this.onChange(valueLength);
+    this.onTouched();
   }
 
 }

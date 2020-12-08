@@ -1,9 +1,16 @@
 <div class="container">
-  <div>
-    <h1>Custom input</h1>
-    <app-custom-input [formControl]="inputTest"></app-custom-input>
+  <section class="section">
+    <h2>Custom input</h2>
+    <app-simple-custom-input [formControl]="inputTest"></app-simple-custom-input>
     <div>Value: {{ inputTest.value }}</div>
     <div>Touched: {{ inputTest.touched }}</div>
     <div>Dirty: {{ inputTest.dirty}}</div>
-  </div>
+  </section>
+  <section class="section">
+    <h2>Input length</h2>
+    <app-input-length [formControl]="inputTest2"></app-input-length>
+    <div>Value: {{ inputTest2.value }}</div>
+    <div>Touched: {{ inputTest2.touched }}</div>
+    <div>Dirty: {{ inputTest2.dirty}}</div>
+  </section>
 </div>

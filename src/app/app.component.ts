@@ -10,5 +10,6 @@ export class AppComponent {
   title = 'control-value-accessor';
 
   inputTest: FormControl = new FormControl(undefined);
+  inputTest2: FormControl = new FormControl(undefined);
 
 }
