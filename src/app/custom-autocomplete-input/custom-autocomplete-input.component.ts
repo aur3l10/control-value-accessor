@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, of } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 
 export interface User {
   name: string;
@@ -24,11 +24,11 @@ export class CustomAutocompleteInputComponent implements OnInit, ControlValueAcc
   onChange!: (value: string) => void;
 
   myControl = new FormControl();
-  options: User[] = [
+  options: Observable<User[]> = of([
     { name: 'Mary' },
     { name: 'Shelley' },
     { name: 'Igor' }
-  ];
+  ]);
   filteredOptions!: Observable<User[]>;
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class CustomAutocompleteInputComponent implements OnInit, ControlValueAcc
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.options.slice())
+        switchMap(name => name ? this._filter(name) : this.options)
       );
   }
 
@@ -57,9 +57,15 @@ export class CustomAutocompleteInputComponent implements OnInit, ControlValueAcc
   * @param value
   */
   writeValue(value: string): void {
-    const [option] = this._filter(value)
-    this.myControl.setValue(option);
-    this.myControl.updateValueAndValidity();
+    // const [option] = this._filter(value)
+    this._filter(value).subscribe(
+      option => {
+        const [o] = option
+        this.myControl.setValue(o);
+        this.myControl.updateValueAndValidity();
+      }
+    )
+
   }
 
   registerOnChange(fn: any): void {
@@ -70,10 +76,13 @@ export class CustomAutocompleteInputComponent implements OnInit, ControlValueAcc
     this.onTouched = fn;
   }
 
-  private _filter(name: string): User[] {
+  private _filter(name: string): Observable<User[]> {
     const filterValue = name.toLowerCase();
 
-    return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.options.pipe(
+      map(options => options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0))
+    )
+
   }
 
 }
