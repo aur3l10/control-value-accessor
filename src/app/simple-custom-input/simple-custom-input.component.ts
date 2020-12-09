@@ -42,7 +42,7 @@ export class SimpleCustomInputComponent implements ControlValueAccessor {
   * When implementing the `registerOnChange` method in your own value accessor,
   * save the given function so your class calls it at the appropriate time.
   */
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
@@ -53,7 +53,7 @@ export class SimpleCustomInputComponent implements ControlValueAccessor {
     * ave the given function so your class calls it when the control
     * should be considered blurred or "touched".
     */
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

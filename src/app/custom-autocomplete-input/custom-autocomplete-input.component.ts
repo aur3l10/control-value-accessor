@@ -75,11 +75,11 @@ export class CustomAutocompleteInputComponent implements OnInit, ControlValueAcc
     )
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: number) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
